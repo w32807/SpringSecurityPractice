@@ -20,14 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user1").password("$2a$10$IX78b.S06fC0ScRoL3uBJuUE4d7kyv6eQTEkXQx0.DzfgJQprb7zm").roles("USER");
-    }
-    
-    @Override
     // 설정을 통해서 권한을 부여함
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/sample/all").permitAll()
             .antMatchers("/sample/member").hasRole("USER");
+        // 인가, 인증 문제시 로그인 화면으로 전환
+        http.formLogin();
     }
 }
